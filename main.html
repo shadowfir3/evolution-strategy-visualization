@@ -14,9 +14,14 @@
           <h1>Sinus Goodness Landscape</h1>
           <p class="description">
             The canvas shows a 2D sinus-based goodness function in grayscale.
-            Fifty red dots represent the first generation of randomly placed
-            candidates.
+            Fifty red dots represent candidate solutions. Every second, the
+            best 20% reproduce locally, the worst 20% are removed, and the next
+            generation is drawn.
           </p>
+        </div>
+        <div class="controls">
+          <button id="pause-button" type="button">Pause</button>
+          <p id="status-text" class="status">Running generation loop</p>
         </div>
         <canvas
           id="evolution-canvas"

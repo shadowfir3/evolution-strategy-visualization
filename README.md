@@ -9,6 +9,8 @@ This workspace contains a static browser visualization that renders:
 - A `1600x800` canvas
 - A grayscale background based on a 2D sinus goodness landscape
 - A first generation of `50` randomly placed red dots
+- A generation loop that keeps the best candidates and mutates new offspring
+- Plain HTML statistics and controls beside the canvas
 - A per-dot goodness score computed from the same sinus function
 
 The current version is focused on the initial visualization layer: the landscape plus the first generation of candidate points.
@@ -41,6 +43,12 @@ After the background is created, the script generates `50` random dots across th
 - `goodness` value
 
 These dots are drawn as red circles on top of the grayscale landscape.
+
+Every second, the strongest `20%` of the current population are used as
+parents for local mutations. The weakest `20%` are removed, producing the
+next generation while the stats panel updates the generation number, average
+goodness, and best goodness. The UI also includes pause/resume and reset
+controls.
 
 ## Local Test
 
@@ -76,7 +84,7 @@ Then open the forwarded URL from the IDE's `Ports` panel.
 
 ## Next Possible Steps
 
-- Add mutation and offspring generation
-- Select the best candidates per generation
-- Animate the optimization process over time
+- Add configurable mutation radius and generation speed
 - Show per-dot fitness visually using size or color
+- Plot goodness trends over time in a small chart
+- Add alternate landscapes for comparison

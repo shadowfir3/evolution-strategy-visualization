@@ -67,8 +67,15 @@ h1 {
 .controls {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 14px;
   margin: 18px 0;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 button {
@@ -102,6 +109,14 @@ button:active {
   margin: 0;
   color: var(--muted);
   font-size: 0.98rem;
+  text-align: right;
+}
+
+.simulation-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 18px;
+  align-items: start;
 }
 
 canvas {
@@ -113,6 +128,46 @@ canvas {
   background: #000;
 }
 
+.stats-panel {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.stats-eyebrow {
+  margin: 0 0 14px;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.stats-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.stat-item {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.stat-item dt {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.stat-item dd {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
 @media (max-width: 900px) {
   .page {
     padding: 12px;
@@ -121,6 +176,18 @@ canvas {
   .controls {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .status {
+    text-align: left;
+  }
+
+  .simulation-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-list {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   }
 
   .panel {

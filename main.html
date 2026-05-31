@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Evolution Strategy Visualization</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=20260531" />
   </head>
   <body>
     <main class="page">
@@ -20,18 +20,44 @@
           </p>
         </div>
         <div class="controls">
-          <button id="pause-button" type="button">Pause</button>
+          <div class="button-row">
+            <button id="pause-button" type="button">Pause</button>
+            <button id="reset-button" type="button">Reset Simulation</button>
+          </div>
           <p id="status-text" class="status">Running generation loop</p>
         </div>
-        <canvas
-          id="evolution-canvas"
-          width="1600"
-          height="800"
-          aria-label="Evolution strategy visualization canvas"
-        ></canvas>
+        <div class="simulation-layout">
+          <canvas
+            id="evolution-canvas"
+            width="1600"
+            height="800"
+            aria-label="Evolution strategy visualization canvas"
+          ></canvas>
+          <section class="stats-panel" aria-label="Simulation statistics">
+            <p class="stats-eyebrow">Statistics</p>
+            <dl class="stats-list">
+              <div class="stat-item">
+                <dt>Generation</dt>
+                <dd id="generation-value">1</dd>
+              </div>
+              <div class="stat-item">
+                <dt>Dots</dt>
+                <dd id="dot-count-value">50</dd>
+              </div>
+              <div class="stat-item">
+                <dt>Avg goodness</dt>
+                <dd id="average-goodness-value">0.000</dd>
+              </div>
+              <div class="stat-item">
+                <dt>Best goodness</dt>
+                <dd id="best-goodness-value">0.000</dd>
+              </div>
+            </dl>
+          </section>
+        </div>
       </section>
     </main>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=20260531"></script>
   </body>
 </html>

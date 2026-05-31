@@ -1,7 +1,12 @@
 const canvas = document.getElementById("evolution-canvas");
 const context = canvas.getContext("2d");
 const pauseButton = document.getElementById("pause-button");
+const resetButton = document.getElementById("reset-button");
 const statusText = document.getElementById("status-text");
+const generationValue = document.getElementById("generation-value");
+const dotCountValue = document.getElementById("dot-count-value");
+const averageGoodnessValue = document.getElementById("average-goodness-value");
+const bestGoodnessValue = document.getElementById("best-goodness-value");
 
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
@@ -124,20 +129,24 @@ function evolveDots(currentDots) {
   return [...survivors, ...offspring];
 }
 
-function drawGenerationInfo(dots) {
+function getSimulationStats(currentDots) {
   const averageGoodness =
-    dots.reduce((sum, dot) => sum + dot.goodness, 0) / dots.length;
-  const bestGoodness = Math.max(...dots.map((dot) => dot.goodness));
+    currentDots.reduce((sum, dot) => sum + dot.goodness, 0) / currentDots.length;
+  const bestGoodness = Math.max(...currentDots.map((dot) => dot.goodness));
 
-  context.fillStyle = "rgba(0, 0, 0, 0.55)";
-  context.fillRect(18, 18, 260, 100);
+  return {
+    averageGoodness,
+    bestGoodness,
+  };
+}
 
-  context.fillStyle = "#ffffff";
-  context.font = '18px "Trebuchet MS", sans-serif';
-  context.fillText(`Generation ${generation}`, 32, 46);
-  context.fillText(`Dots: ${dots.length}`, 32, 68);
-  context.fillText(`Avg goodness: ${averageGoodness.toFixed(3)}`, 32, 90);
-  context.fillText(`Best goodness: ${bestGoodness.toFixed(3)}`, 32, 112);
+function updateStatistics(currentDots) {
+  const { averageGoodness, bestGoodness } = getSimulationStats(currentDots);
+
+  generationValue.textContent = String(generation);
+  dotCountValue.textContent = String(currentDots.length);
+  averageGoodnessValue.textContent = averageGoodness.toFixed(3);
+  bestGoodnessValue.textContent = bestGoodness.toFixed(3);
 }
 
 function updateControls() {
@@ -148,16 +157,23 @@ function updateControls() {
 }
 
 const backgroundImage = createBackgroundImage();
-let dots = createRandomDots(DOT_COUNT);
+let dots = [];
 
 function render() {
+  context.clearRect(0, 0, WIDTH, HEIGHT);
   context.putImageData(backgroundImage, 0, 0);
 
   for (const dot of dots) {
     dot.draw(context);
   }
+  updateStatistics(dots);
+}
 
-  drawGenerationInfo(dots);
+function clearScheduledGeneration() {
+  if (evolutionTimerId !== null) {
+    window.clearTimeout(evolutionTimerId);
+    evolutionTimerId = null;
+  }
 }
 
 function scheduleNextGeneration() {
@@ -180,12 +196,24 @@ function runGenerationStep() {
   scheduleNextGeneration();
 }
 
+function resetSimulation() {
+  clearScheduledGeneration();
+  generation = 1;
+  dots = createRandomDots(DOT_COUNT);
+  evaluateDots(dots);
+  render();
+  updateControls();
+
+  if (!isPaused) {
+    scheduleNextGeneration();
+  }
+}
+
 pauseButton.addEventListener("click", () => {
   isPaused = !isPaused;
 
-  if (isPaused && evolutionTimerId !== null) {
-    window.clearTimeout(evolutionTimerId);
-    evolutionTimerId = null;
+  if (isPaused) {
+    clearScheduledGeneration();
   }
 
   updateControls();
@@ -195,7 +223,8 @@ pauseButton.addEventListener("click", () => {
   }
 });
 
-evaluateDots(dots);
-render();
-updateControls();
-scheduleNextGeneration();
+resetButton.addEventListener("click", () => {
+  resetSimulation();
+});
+
+resetSimulation();

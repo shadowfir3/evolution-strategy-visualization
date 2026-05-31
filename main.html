@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Evolution Strategy Visualization</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="panel">
+        <div class="copy">
+          <p class="eyebrow">Evolution Strategy</p>
+          <h1>Sinus Goodness Landscape</h1>
+          <p class="description">
+            The canvas shows a 2D sinus-based goodness function in grayscale.
+            Fifty red dots represent the first generation of randomly placed
+            candidates.
+          </p>
+        </div>
+        <canvas
+          id="evolution-canvas"
+          width="1600"
+          height="800"
+          aria-label="Evolution strategy visualization canvas"
+        ></canvas>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
